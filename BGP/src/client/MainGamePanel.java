@@ -79,14 +79,14 @@ public class MainGamePanel extends JPanel implements KeyListener{
 	public void setOthello(GameControl gc) {
 		tile = new Tile(gc);
 		add(tile);
-		tile.setBounds(20, 20, 800, 800);
+		tile.setBounds(50, 30, 800, 800);
 		// this.gc = gc;
 		gc.gameStatus(tile);
 	}
 	
 	public void setOmok(MapSize ms, Map omokMap) {
 		omokDb = new DrawBorad(ms, omokMap);
-		omokDb.setBounds(20,20,800,800);
+		omokDb.setBounds(50,30,800,800);
 		add(omokDb);
 		addMouseListener(new MouseEventHandler(omokMap, ms, omokDb));
 	}
@@ -97,7 +97,6 @@ public class MainGamePanel extends JPanel implements KeyListener{
 	}
 	
 	public void visibleOmok(){
-		
 		omokDb.setVisible(true);
 		tile.setVisible(false);
 	}

@@ -132,11 +132,11 @@ public class Client extends JFrame implements ActionListener, Runnable {
 					sr.model.setValueAt("2", Integer.parseInt(msg.substring(8)), 1);
 				} else if (msg.equals("[LEAVE]")) { // 누가 방을 나갔을 경우
 					rivalName = "";
+					writer.println("[NEWSET]");
 					JOptionPane.showMessageDialog(this, "상대방이 떠났습니다.");
 					// reset();
 					setEnabled(true);
 					setDice();
-					writer.println("[NEWSET]");
 				} else if (msg.equals("[GODICE]")) {
 					this.setEnabled(true);
 					dg.start.setVisible(true);
@@ -170,10 +170,12 @@ public class Client extends JFrame implements ActionListener, Runnable {
 					mgp.sendMsg.setText("");
 					sizeChange(1300, 900);
 				} else if (msg.startsWith("[GOOMOK]")) { ////////////////// 오목부분
+					mgp.turnImage.setIcon(new ImageIcon("image\\black.png"));
 					omokMap.init();
 					game = 2;
 					mgp.logMsg.setText("");
 					mgp.sendMsg.setText("");
+					omokMap.setPW(writer);
 					card.show(getContentPane(), "OTG");
 					mgp.visibleOmok();
 					sizeChange(1300, 900);
@@ -187,12 +189,16 @@ public class Client extends JFrame implements ActionListener, Runnable {
 						else
 							mgp.tile.changeStone(x, y, 1);
 					} else {
-							omokMap.setMap(x, y);
+							omokMap.setMap(x, y, 2);
+							mgp.omokDb.repaint();
 							
 					}
 				} else if (msg.startsWith("[YOURT]")) {
 					// mgp.tile.setenable(true);
 					// mgp.tile.gameWLD();
+					if(game == 2){
+						mgp.omokDb.ena=true;
+					}
 					mgp.turnNotice.setText(myName);
 					if (playerColor == 1)
 						writer.println("[BLACK]");
@@ -368,6 +374,7 @@ public class Client extends JFrame implements ActionListener, Runnable {
 			writer.println("[GOOMOK]");
 			cg.setVisible(false);
 			System.out.println("오목버튼 눌림");
+			mgp.omokDb.ena = true;
 		} else if (e.getSource() == dg.start) {
 			dg.start.setVisible(false);
 			writer.println("[CASTD]");
